@@ -12,6 +12,7 @@ class ProdutoSchema(BaseModel):
     marca: Optional[str]
     departamento: str
     urlImagem: str
+    ean: str
 
 
     class Config:

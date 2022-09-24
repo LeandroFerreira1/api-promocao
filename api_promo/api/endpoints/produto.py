@@ -8,6 +8,7 @@ from sqlalchemy.future import select
 from models.produto_model import ProdutoModel
 from schemas.produto_schema import ProdutoSchema
 from core.deps import get_session
+from scrapers.produto_scrap import buscar_produto
 
 
 router = APIRouter()
@@ -17,14 +18,23 @@ router = APIRouter()
 @router.post('/', status_code=status.HTTP_201_CREATED, response_model=ProdutoSchema)
 async def post_produto(produto: ProdutoSchema, db: AsyncSession = Depends(get_session)):
     novo_produto: ProdutoModel = ProdutoModel(
-        nome=produto.nome, tipo=produto.tipo, marca=produto.marca, departamento=produto.departamento, urlImagem=produto.urlImagem)
+        nome=produto.nome, tipo=produto.tipo, marca=produto.marca, departamento=produto.departamento, urlImagem=produto.urlImagem, ean=produto.ean)
 
     db.add(novo_produto)
     await db.commit()
 
     return novo_produto
 
-
+# POST produto
+@router.post('/{ean}', status_code=status.HTTP_201_CREATED, response_model=ProdutoSchema)
+async def post_produto_ean(ean: str,produto: ProdutoSchema, db: AsyncSession = Depends(get_session)):
+    produtoEan = ProdutoModel
+    produtoEan = buscar_produto(ean)
+    novo_produto: ProdutoModel = ProdutoModel(
+        nome=produtoEan.nome, tipo=produto.tipo, marca=produtoEan.marca, departamento=produto.departamento, urlImagem=produtoEan.urlImagem, ean=produtoEan.ean)
+    db.add(novo_produto)
+    await db.commit()
+    return novo_produto
 
 # GET produtos
 @router.get('/', response_model=List[ProdutoSchema])
