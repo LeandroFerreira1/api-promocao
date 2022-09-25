@@ -30,7 +30,7 @@ async def post_promocao(promocao: PromocaoSchemaBase, usuario_logado: UsuarioMod
 @router.get('/', response_model=List[PromocaoSchema])
 async def get_promocoes(db: AsyncSession = Depends(get_session)):
     async with db as session:
-        query = select(PromocaoModel.id)
+        query = select(PromocaoModel)
         result = await session.execute(query)
         promocoes: List[PromocaoModel] = result.scalars().unique().all()
 

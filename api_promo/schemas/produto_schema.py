@@ -10,9 +10,9 @@ class ProdutoSchema(BaseModel):
     nome: str
     tipo: Optional[str]
     marca: Optional[str]
-    departamento: str
+    departamento: Optional[str]
     urlImagem: str
-    ean: str
+    ean: Optional[str]
 
 
     class Config:

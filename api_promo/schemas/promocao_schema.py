@@ -20,8 +20,8 @@ class PromocaoSchemaBase(BaseModel):
 
 class PromocaoSchema(BaseModel):
     id: Optional[int] = None
-    valor_original: Optional[str]
-    valor_promocional: str
+    valor_original: str
+    valor_promocional: Optional[str]
     data_validade: Optional[date]
     estabelecimento: Optional[EstabelecimentoSchema]
     produto: Optional[ProdutoSchema]
