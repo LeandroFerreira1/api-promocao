@@ -52,6 +52,7 @@ async def get_promocao(promocao_id: int, db: AsyncSession = Depends(get_session)
                                 status_code=status.HTTP_404_NOT_FOUND)
 
 
+
 # PUT promocao
 @router.patch('/{promocao_id}', response_model=PromocaoSchema, status_code=status.HTTP_202_ACCEPTED)
 async def put_promocao(promocao_id: int, promocao: PromocaoSchema, db: AsyncSession = Depends(get_session), usuario_logado: UsuarioModel = Depends(get_current_user)):

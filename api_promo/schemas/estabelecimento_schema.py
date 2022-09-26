@@ -1,8 +1,10 @@
 from typing import Optional
 
 from typing import List
+from datetime import date
 
 from pydantic import BaseModel
+from schemas.produto_schema import ProdutoSchema
 
     
 class EstabelecimentoSchema(BaseModel):
@@ -19,6 +21,11 @@ class EstabelecimentoSchema(BaseModel):
 
 class Promocao(BaseModel):
     id: Optional[int] = None
+    valor_original: str
+    valor_promocional: Optional[str]
+    data_validade: Optional[date]
+    produto: Optional[ProdutoSchema]
+
     class Config:
         orm_mode = True
 
