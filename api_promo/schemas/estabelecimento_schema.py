@@ -1,5 +1,7 @@
 from typing import Optional
 
+from typing import List
+
 from pydantic import BaseModel
 
     
@@ -14,3 +16,20 @@ class EstabelecimentoSchema(BaseModel):
 
     class Config:
         orm_mode = True
+
+class Promocao(BaseModel):
+    id: Optional[int] = None
+    class Config:
+        orm_mode = True
+
+class EstabelecimentoSchemaPromocao(BaseModel):
+    id: Optional[int] = None
+    nome: str
+    promocoes: List[Promocao]
+
+    class Config:
+        orm_mode = True
+
+
+
+

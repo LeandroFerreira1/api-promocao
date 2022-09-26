@@ -7,7 +7,7 @@ from sqlalchemy.future import select
 
 from models.estabelecimento_model import EstabelecimentoModel
 from models.usuario_model import UsuarioModel
-from schemas.estabelecimento_schema import EstabelecimentoSchema
+from schemas.estabelecimento_schema import EstabelecimentoSchema, EstabelecimentoSchemaPromocao
 from core.deps import get_session, get_current_user
 
 
@@ -31,6 +31,16 @@ async def post_estabelecimento(estabelecimento: EstabelecimentoSchema, db: Async
 async def get_estabelecimentos(db: AsyncSession = Depends(get_session)):
     async with db as session:
         query = select(EstabelecimentoModel)
+        result = await session.execute(query)
+        estabelecimentos: List[EstabelecimentoModel] = result.scalars().unique().all()
+
+        return estabelecimentos
+
+# GET estabelecimentos que tem promocao
+@router.get('/promocoes/', response_model=List[EstabelecimentoSchemaPromocao])
+async def get_estabelecimentos_promocao(db: AsyncSession = Depends(get_session)):
+    async with db as session:
+        query = select(EstabelecimentoModel).where(EstabelecimentoModel.promocoes != None)
         result = await session.execute(query)
         estabelecimentos: List[EstabelecimentoModel] = result.scalars().unique().all()
 

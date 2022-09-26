@@ -15,4 +15,4 @@ class EstabelecimentoModel(settings.DBBaseModel):
     longitude = Column(String(256), nullable=False)
     urlImagem = Column(String(256), nullable=True)
     usuario_estabelecimento_id = Column(Integer, ForeignKey('usuario_estabelecimento.id'), nullable=True)
-    promocoes = relationship("PromocaoModel", back_populates="estabelecimento")
+    promocoes = relationship("PromocaoModel", back_populates="estabelecimento", lazy='subquery')

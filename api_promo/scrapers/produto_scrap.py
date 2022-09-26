@@ -31,6 +31,9 @@ def buscar_produto(ean: str) -> ProdutoModel:
     caminho = './data/images/'
     imagename = caminho + ean_produto + '.jpg'
 
+    caminhoApi = '/api/v1/upload-images/'
+    caminhoAbsoluto = caminhoApi + ean_produto
+
     with open(imagename, 'wb') as f:
         f.write(requests.get(url_image, headers=cabecalho).content)
     
@@ -39,7 +42,7 @@ def buscar_produto(ean: str) -> ProdutoModel:
     produto.nome = description_produto
     produto.marca = marca_produto
     #produto.tipo = ncm_produto
-    produto.urlImagem = imagename
+    produto.urlImagem = caminhoAbsoluto
     produto.ean = ean_produto
 
     return (produto)
