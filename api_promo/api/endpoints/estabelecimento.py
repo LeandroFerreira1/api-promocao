@@ -61,6 +61,20 @@ async def get_estabelecimento(estabelecimento_id: int, db: AsyncSession = Depend
             raise HTTPException(detail='Estabelecimento não encontrado',
                                 status_code=status.HTTP_404_NOT_FOUND)
 
+# GET estabelecimento
+@router.get('/promocao/{estabelecimento_id}', response_model=EstabelecimentoSchemaPromocao, status_code=status.HTTP_200_OK)
+async def get_estabelecimento(estabelecimento_id: int, db: AsyncSession = Depends(get_session)):
+    async with db as session:
+        query = select(EstabelecimentoModel).filter(EstabelecimentoModel.id == estabelecimento_id)
+        result = await session.execute(query)
+        estabelecimento: EstabelecimentoModel = result.scalars().unique().one_or_none()
+
+        if estabelecimento:
+            return estabelecimento
+        else:
+            raise HTTPException(detail='Estabelecimento não encontrado',
+                                status_code=status.HTTP_404_NOT_FOUND)
+
 
 # PUT estabelecimento
 @router.patch('/{estabelecimento_id}', response_model=EstabelecimentoSchema, status_code=status.HTTP_202_ACCEPTED)

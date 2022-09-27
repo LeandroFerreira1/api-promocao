@@ -29,9 +29,7 @@ class Promocao(BaseModel):
     class Config:
         orm_mode = True
 
-class EstabelecimentoSchemaPromocao(BaseModel):
-    id: Optional[int] = None
-    nome: str
+class EstabelecimentoSchemaPromocao(EstabelecimentoSchema):
     promocoes: List[Promocao]
 
     class Config:
