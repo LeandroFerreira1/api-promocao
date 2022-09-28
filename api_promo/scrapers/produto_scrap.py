@@ -41,7 +41,8 @@ def buscar_produto(ean: str) -> ProdutoModel:
 
     produto.nome = description_produto
     produto.marca = marca_produto
-    #produto.tipo = ncm_produto
+    produto.tipo = ""
+    produto.departamento = ""
     produto.urlImagem = caminhoAbsoluto
     produto.ean = ean_produto
 

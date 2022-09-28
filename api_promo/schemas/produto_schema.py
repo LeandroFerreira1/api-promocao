@@ -17,3 +17,8 @@ class ProdutoSchema(BaseModel):
 
     class Config:
         orm_mode = True
+
+class EanSchema(BaseModel):
+    ean: Optional[str]
+    class Config:
+        orm_mode = True
