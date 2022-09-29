@@ -61,6 +61,21 @@ async def get_produto(produto_id: int, db: AsyncSession = Depends(get_session)):
                                 status_code=status.HTTP_404_NOT_FOUND)
 
 
+# GET produto
+@router.get('/ean/{ean}', response_model=ProdutoSchema, status_code=status.HTTP_200_OK)
+async def get_produto_ean(ean: str, db: AsyncSession = Depends(get_session)):
+    async with db as session:
+        query = select(ProdutoModel).where(ProdutoModel.ean == ean)
+        result = await session.execute(query)
+        produto: ProdutoModel = result.scalars().unique().one_or_none()
+
+        if produto:
+            return produto
+        else:
+            raise HTTPException(detail='Produto não encontrado',
+                                status_code=status.HTTP_404_NOT_FOUND)
+
+
 # PUT produto
 @router.patch('/{produto_id}', response_model=ProdutoSchema, status_code=status.HTTP_202_ACCEPTED)
 async def put_produto(produto_id: int, produto: ProdutoSchema, db: AsyncSession = Depends(get_session)):
