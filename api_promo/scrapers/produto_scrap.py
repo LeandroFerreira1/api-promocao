@@ -2,22 +2,23 @@ import requests
 from bs4 import BeautifulSoup
 from models.produto_model import ProdutoModel
 
+
 cabecalho = {'user-agent' : 'Mozzila/5.0'}
 base_url = 'https://cosmos.bluesoft.com.br/products/'
 image_url = 'https://cdn-cosmos.bluesoft.com.br/products/'
 
 
-def buscar_produto(ean: str) -> ProdutoModel:
+def buscar_produto(ean: int) -> ProdutoModel:
 
-    url = base_url + ean
-    url_image = image_url + ean
+    url = base_url + str(ean)
+    url_image = image_url + str(ean)
 
     resposta = requests.get(url, headers=cabecalho)
     sopa = resposta.text
     sopa_bonita = BeautifulSoup(sopa, 'html.parser')
 
-    ean = sopa_bonita.find_all(id='product_gtin')
-    ean_produto = ean[0].contents[0].text
+    ean2 = sopa_bonita.find_all(id='product_gtin')
+    ean_produto = ean2[0].contents[0].text
 
     description = sopa_bonita.find_all(id='product_description')
     description_produto = description[0].contents[0].text
@@ -39,11 +40,12 @@ def buscar_produto(ean: str) -> ProdutoModel:
     
     produto = ProdutoModel
 
+    produto.id = int(ean_produto)
     produto.nome = description_produto
     produto.marca = marca_produto
     produto.tipo = ""
     produto.departamento = ""
     produto.urlImagem = caminhoAbsoluto
-    produto.ean = ean_produto
+   
 
     return (produto)

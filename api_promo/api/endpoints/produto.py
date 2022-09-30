@@ -18,7 +18,7 @@ router = APIRouter()
 @router.post('/', status_code=status.HTTP_201_CREATED, response_model=ProdutoSchema)
 async def post_produto(produto: ProdutoSchema, db: AsyncSession = Depends(get_session)):
     novo_produto: ProdutoModel = ProdutoModel(
-        nome=produto.nome, tipo=produto.tipo, marca=produto.marca, departamento=produto.departamento, urlImagem=produto.urlImagem, ean=produto.ean)
+        id=produto.id, nome=produto.nome, tipo=produto.tipo, marca=produto.marca, departamento=produto.departamento, urlImagem=produto.urlImagem)
 
     db.add(novo_produto)
     await db.commit()
@@ -27,10 +27,10 @@ async def post_produto(produto: ProdutoSchema, db: AsyncSession = Depends(get_se
 
 # POST produto
 @router.post('/ean/{ean}', status_code=status.HTTP_201_CREATED)
-async def post_produto_ean(ean: str, db: AsyncSession = Depends(get_session)):
+async def post_produto_ean(ean: int, db: AsyncSession = Depends(get_session)):
     produtoEan = buscar_produto(ean)
     novo_produto: ProdutoModel = ProdutoModel(
-        nome=produtoEan.nome, marca=produtoEan.marca, urlImagem=produtoEan.urlImagem, ean=produtoEan.ean)
+        nome=produtoEan.nome, marca=produtoEan.marca, urlImagem=produtoEan.urlImagem, id=produtoEan.id)
     db.add(novo_produto)
     await db.commit()
     return novo_produto
@@ -51,21 +51,6 @@ async def get_produtos(db: AsyncSession = Depends(get_session)):
 async def get_produto(produto_id: int, db: AsyncSession = Depends(get_session)):
     async with db as session:
         query = select(ProdutoModel).filter(ProdutoModel.id == produto_id)
-        result = await session.execute(query)
-        produto: ProdutoModel = result.scalars().unique().one_or_none()
-
-        if produto:
-            return produto
-        else:
-            raise HTTPException(detail='Produto não encontrado',
-                                status_code=status.HTTP_404_NOT_FOUND)
-
-
-# GET produto
-@router.get('/ean/{ean}', response_model=ProdutoSchema, status_code=status.HTTP_200_OK)
-async def get_produto_ean(ean: str, db: AsyncSession = Depends(get_session)):
-    async with db as session:
-        query = select(ProdutoModel).where(ProdutoModel.ean == ean)
         result = await session.execute(query)
         produto: ProdutoModel = result.scalars().unique().one_or_none()
 
