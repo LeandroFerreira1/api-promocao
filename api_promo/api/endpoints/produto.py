@@ -47,12 +47,12 @@ async def get_produtos(db: AsyncSession = Depends(get_session)):
 
 
 # GET produto
-@router.get('/{produto_id}', response_model=ProdutoSchema, status_code=status.HTTP_200_OK)
+@router.get('/{produto_id}', response_model=List[ProdutoSchema], status_code=status.HTTP_200_OK)
 async def get_produto(produto_id: int, db: AsyncSession = Depends(get_session)):
     async with db as session:
         query = select(ProdutoModel).filter(ProdutoModel.id == produto_id)
         result = await session.execute(query)
-        produto: ProdutoModel = result.scalars().unique().one_or_none()
+        produto: List[ProdutoModel] = result.scalars().unique().all()
 
         if produto:
             return produto
