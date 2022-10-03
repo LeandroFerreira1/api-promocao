@@ -60,10 +60,9 @@ async def put_conquista(conquista_id: int, conquista: ConquistaSchema, db: Async
         conquista_up: ConquistaModel = result.scalars().unique().one_or_none()
 
         if conquista_up:
-            if conquista.nome:
-                conquista_up.nome = conquista.nome
-            if conquista.valor:
-                conquista_up.valor = conquista.valor
+            patch_data = conquista.dict(exclude_unset=True)
+            for key, value in patch_data.items():
+                setattr(conquista_up, key, value)
                 
             await session.commit()
 

@@ -7,3 +7,4 @@ from models.usuario_estabelecimento_model import UsuarioEstabelecimentoModel
 from models.conquista_model import ConquistaModel
 from models.usuario_conquista_model import UsuarioConquistaModel
 from models.avaliacao_model import AvaliacaoModel
+from models.departamento_model import DepartamentoModel

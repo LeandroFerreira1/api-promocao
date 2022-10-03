@@ -75,9 +75,14 @@ async def put_usuario(usuario: UsuarioSchemaUp, usuario_logado: UsuarioModel = D
         usuario_up: UsuarioSchemaBase = result.scalars().unique().one_or_none()
 
         if usuario_up:
-            patch_data = usuario.dict(exclude_unset=True)
-            for key, value in patch_data.items():
-                setattr(usuario_up, key, value)
+            if usuario.nome:
+                usuario_up.nome = usuario.nome
+            if usuario.sobrenome:
+                usuario_up.sobrenome = usuario.sobrenome
+            if usuario.email:
+                usuario_up.email = usuario.email
+            if usuario.senha:
+                usuario_up.senha = gerar_hash_senha(usuario.senha)
 
             await session.commit()
 

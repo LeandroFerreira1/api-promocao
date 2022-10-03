@@ -6,19 +6,18 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
 from models.produto_model import ProdutoModel
-from schemas.produto_schema import ProdutoSchema
+from schemas.produto_schema import ProdutoSchema, ProdutoSchemaCompleto
 from core.deps import get_session
 from scrapers.produto_scrap import buscar_produto
 
 
 router = APIRouter()
 
-
 # POST produto
 @router.post('/', status_code=status.HTTP_201_CREATED, response_model=ProdutoSchema)
 async def post_produto(produto: ProdutoSchema, db: AsyncSession = Depends(get_session)):
     novo_produto: ProdutoModel = ProdutoModel(
-        id=produto.id, nome=produto.nome, tipo=produto.tipo, marca=produto.marca, departamento=produto.departamento, urlImagem=produto.urlImagem)
+        id=produto.id, nome=produto.nome, marca=produto.marca, departamento_id=produto.departamento_id, urlImagem=produto.urlImagem)
 
     db.add(novo_produto)
     await db.commit()
@@ -36,7 +35,7 @@ async def post_produto_ean(ean: int, db: AsyncSession = Depends(get_session)):
     return novo_produto
 
 # GET produtos
-@router.get('/', response_model=List[ProdutoSchema])
+@router.get('/', response_model=List[ProdutoSchemaCompleto])
 async def get_produtos(db: AsyncSession = Depends(get_session)):
     async with db as session:
         query = select(ProdutoModel)
@@ -70,17 +69,9 @@ async def put_produto(produto_id: int, produto: ProdutoSchema, db: AsyncSession 
         produto_up: ProdutoModel = result.scalars().unique().one_or_none()
 
         if produto_up:
-            if produto.nome:
-                produto_up.nome = produto.nome
-            if produto.tipo:
-                produto_up.tipo = produto.tipo
-            if produto.marca:
-                produto_up.marca = produto.marca
-            if produto.departamento:
-                produto_up.departamento = produto.departamento
-            if produto.urlImagem:
-                produto_up.urlImagem = produto.urlImagem
-
+            patch_data = produto.dict(exclude_unset=True)
+            for key, value in patch_data.items():
+                setattr(produto_up, key, value)
             await session.commit()
 
             return produto_up

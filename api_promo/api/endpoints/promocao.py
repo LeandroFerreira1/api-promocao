@@ -63,14 +63,9 @@ async def put_promocao(promocao_id: int, promocao: PromocaoSchema, db: AsyncSess
         promocao_up: PromocaoModel = result.scalars().unique().one_or_none()
 
         if promocao_up:
-            if promocao.valor_original:
-                promocao_up.valor_original = promocao.valor_original
-            if promocao.valor_promocional:
-                promocao_up.valor_promocional = promocao.valor_promocional
-            if promocao.data_validade:
-                promocao_up.data_validade = promocao.data_validade
-            if usuario_logado.id != promocao_up.usuario_id:
-                promocao_up.usuario_id = usuario_logado.id
+            patch_data = promocao.dict(exclude_unset=True)
+            for key, value in patch_data.items():
+                setattr(promocao_up, key, value)
 
             await session.commit()
 

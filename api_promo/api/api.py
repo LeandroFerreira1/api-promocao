@@ -1,3 +1,4 @@
+import imp
 from fastapi import APIRouter
 
 from api.endpoints import promocao
@@ -9,7 +10,7 @@ from api.endpoints import usuario_conquista
 from api.endpoints import conquista
 from api.endpoints import avaliacao
 from api.endpoints import upload_image
-
+from api.endpoints import departamento
 
 api_router = APIRouter()
 
@@ -21,6 +22,8 @@ api_router.include_router(
     estabelecimento.router, prefix='/estabelecimentos', tags=['estabelecimentos'])
 api_router.include_router(
     produto.router, prefix='/produtos', tags=['produtos'])
+api_router.include_router(
+    departamento.router, prefix='/departamentos', tags=['departamentos'])
 api_router.include_router(
     conquista.router, prefix='/conquistas', tags=['conquistas'])
 api_router.include_router(

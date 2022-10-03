@@ -85,16 +85,9 @@ async def put_estabelecimento(estabelecimento_id: int, estabelecimento: Estabele
         estabelecimento_up: EstabelecimentoModel = result.scalars().unique().one_or_none()
 
         if estabelecimento_up:
-            if estabelecimento.nome:
-                estabelecimento_up.nome = estabelecimento.nome
-            if estabelecimento.telefone:
-                estabelecimento_up.telefone = estabelecimento.telefone
-            if estabelecimento.endereco:
-                estabelecimento_up.endereco = estabelecimento.endereco
-            if estabelecimento.latitude:
-                estabelecimento_up.latitude = estabelecimento.latitude
-            if estabelecimento.longitude:
-                estabelecimento_up.longitude = estabelecimento.longitude
+            patch_data = estabelecimento.dict(exclude_unset=True)
+            for key, value in patch_data.items():
+                setattr(estabelecimento_up, key, value)
 
 
             await session.commit()

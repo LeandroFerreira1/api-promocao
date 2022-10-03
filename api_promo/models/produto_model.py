@@ -9,9 +9,10 @@ class ProdutoModel(settings.DBBaseModel):
 
     id = Column(BigInteger, primary_key=True)
     nome = Column(String(256), nullable=False)
-    tipo = Column(String(512), nullable=True)
     marca = Column(String(256), nullable=True)
-    departamento = Column(String(256), nullable=True)
     urlImagem = Column(String(256), nullable=True)
+    departamento_id = Column(Integer, ForeignKey('departamento.id'))
     promocoes = relationship("PromocaoModel", back_populates="produto")
+    departamentos = relationship("DepartamentoModel", back_populates="produtos", lazy='joined')
+    
     
