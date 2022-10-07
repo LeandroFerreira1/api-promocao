@@ -8,7 +8,7 @@ from sqlalchemy.future import select
 from models.avaliacao_model import AvaliacaoModel
 from models.usuario_model import UsuarioModel
 from schemas.avaliacao_schema import AvaliacaoSchema
-from schemas.avaliacao_schema import AvaliacaoSchemaBase, AvaliacaoPromocaoSchema
+from schemas.avaliacao_schema import AvaliacaoSchemaBase, AvaliacaoPromocaoSchema, AvaliacaoSchemaAlter
 from core.deps import get_session, get_current_user
 
 
@@ -65,8 +65,8 @@ async def get_avaliacao_usuario(promocao_id: int, db: AsyncSession = Depends(get
 
 
 # PUT avaliacao
-@router.patch('/{promocao_id}', response_model=AvaliacaoSchemaBase, status_code=status.HTTP_202_ACCEPTED)
-async def patch_avaliacao(promocao_id: int, avaliacao: AvaliacaoSchemaBase, db: AsyncSession = Depends(get_session), usuario_logado: UsuarioModel = Depends(get_current_user)):
+@router.patch('/{promocao_id}', response_model=AvaliacaoSchemaAlter, status_code=status.HTTP_202_ACCEPTED)
+async def patch_avaliacao(promocao_id: int, avaliacao: AvaliacaoSchemaAlter, db: AsyncSession = Depends(get_session), usuario_logado: UsuarioModel = Depends(get_current_user)):
     async with db as session:
         query = select(AvaliacaoModel).filter(AvaliacaoModel.promocao_id == promocao_id).filter(
             AvaliacaoModel.usuario_id == usuario_logado.id)

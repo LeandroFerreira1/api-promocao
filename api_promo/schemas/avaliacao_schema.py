@@ -19,6 +19,17 @@ class AvaliacaoSchemaBase(BaseModel):
     class Config:
         orm_mode = True
 
+class AvaliacaoSchemaAlter(BaseModel):
+    usuario_id: Optional[int]
+    promocao_id: Optional[int]
+    descricao: Optional[str]
+    longitude: Optional[str]
+    latitude: Optional[str]
+    nota: Optional[int]
+    
+    class Config:
+        orm_mode = True
+
 class AvaliacaoSchema(AvaliacaoSchemaBase):
     criador: Optional[UsuarioSchemaBase]
     promocao: Optional[PromocaoSchemaBase]

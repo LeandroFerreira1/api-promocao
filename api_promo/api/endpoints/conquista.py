@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
 from models.conquista_model import ConquistaModel
-from schemas.conquista_schema import ConquistaSchema
+from schemas.conquista_schema import ConquistaSchema, ConquistaSchemaAlter
 from core.deps import get_session
 
 
@@ -52,8 +52,8 @@ async def get_conquista(conquista_id: int, db: AsyncSession = Depends(get_sessio
 
 
 # PUT conquista
-@router.patch('/{conquista_id}', response_model=ConquistaSchema, status_code=status.HTTP_202_ACCEPTED)
-async def put_conquista(conquista_id: int, conquista: ConquistaSchema, db: AsyncSession = Depends(get_session)):
+@router.patch('/{conquista_id}', response_model=ConquistaSchemaAlter, status_code=status.HTTP_202_ACCEPTED)
+async def put_conquista(conquista_id: int, conquista: ConquistaSchemaAlter, db: AsyncSession = Depends(get_session)):
     async with db as session:
         query = select(ConquistaModel).filter(ConquistaModel.id == conquista_id)
         result = await session.execute(query)

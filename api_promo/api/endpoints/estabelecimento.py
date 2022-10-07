@@ -7,7 +7,7 @@ from sqlalchemy.future import select
 
 from models.estabelecimento_model import EstabelecimentoModel
 from models.usuario_model import UsuarioModel
-from schemas.estabelecimento_schema import EstabelecimentoSchema, EstabelecimentoSchemaPromocao
+from schemas.estabelecimento_schema import EstabelecimentoSchema, EstabelecimentoSchemaPromocao, EstabelecimentoSchemaAlter
 from core.deps import get_session, get_current_user
 
 
@@ -77,8 +77,8 @@ async def get_estabelecimento(estabelecimento_id: int, db: AsyncSession = Depend
 
 
 # PUT estabelecimento
-@router.patch('/{estabelecimento_id}', response_model=EstabelecimentoSchema, status_code=status.HTTP_202_ACCEPTED)
-async def put_estabelecimento(estabelecimento_id: int, estabelecimento: EstabelecimentoSchema, db: AsyncSession = Depends(get_session)):
+@router.patch('/{estabelecimento_id}', response_model=EstabelecimentoSchemaAlter, status_code=status.HTTP_202_ACCEPTED)
+async def put_estabelecimento(estabelecimento_id: int, estabelecimento: EstabelecimentoSchemaAlter, db: AsyncSession = Depends(get_session)):
     async with db as session:
         query = select(EstabelecimentoModel).filter(EstabelecimentoModel.id == estabelecimento_id)
         result = await session.execute(query)

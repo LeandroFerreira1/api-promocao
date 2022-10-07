@@ -19,6 +19,18 @@ class EstabelecimentoSchema(BaseModel):
     class Config:
         orm_mode = True
 
+class EstabelecimentoSchemaAlter(BaseModel):
+    id: Optional[int] = None
+    nome: Optional[str]
+    telefone: Optional[str]
+    endereco: Optional[str]
+    latitude: Optional[str]
+    longitude: Optional[str]
+    usuario_estabelecimento_id: Optional[int] = None
+
+    class Config:
+        orm_mode = True
+
 class Promocao(BaseModel):
     id: Optional[int] = None
     valor_original: str

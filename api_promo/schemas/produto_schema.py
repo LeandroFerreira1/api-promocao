@@ -17,12 +17,22 @@ class ProdutoSchema(BaseModel):
     class Config:
         orm_mode = True
 
+class ProdutoSchemaAlter(BaseModel):
+    id: Optional[int]
+    nome: Optional[str]
+    marca: Optional[str]
+    departamento_id: Optional[int] = None
+    urlImagem: Optional[str]
+
+    class Config:
+        orm_mode = True
+
 class ProdutoSchemaCompleto(BaseModel):
     id: int
     nome: str
     marca: Optional[str]
     urlImagem: str
-    departamento: Optional[DepartamentoSchema]
+    departamentos: Optional[DepartamentoSchema]
 
     class Config:
         orm_mode = True

@@ -18,6 +18,18 @@ class PromocaoSchemaBase(BaseModel):
     class Config:
         orm_mode = True
 
+class PromocaoSchemaAlter(BaseModel):
+    id: Optional[int] = None
+    valor_original: Optional[str]
+    valor_promocional: Optional[str]
+    data_validade: Optional[date]
+    usuario_id: Optional[int]
+    estabelecimento_id: Optional[int]
+    produto_id: Optional[int]
+
+    class Config:
+        orm_mode = True
+
 class PromocaoSchema(BaseModel):
     id: Optional[int] = None
     valor_original: str

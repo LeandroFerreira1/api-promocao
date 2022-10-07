@@ -8,6 +8,11 @@ class ConquistaSchema(BaseModel):
     nome: str
     valor: int
 
+class ConquistaSchemaAlter(BaseModel):
+    id: Optional[int] = None
+    nome: Optional[str]
+    valor: Optional[int]
+
 
     class Config:
         orm_mode = True

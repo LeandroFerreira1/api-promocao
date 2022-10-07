@@ -7,8 +7,7 @@ from sqlalchemy.future import select
 
 from models.promocao_model import PromocaoModel
 from models.usuario_model import UsuarioModel
-from schemas.promocao_schema import PromocaoSchema
-from schemas.promocao_schema import PromocaoSchemaBase
+from schemas.promocao_schema import PromocaoSchemaBase, PromocaoSchemaAlter, PromocaoSchema
 from core.deps import get_session, get_current_user
 
 
@@ -54,8 +53,8 @@ async def get_promocao(promocao_id: int, db: AsyncSession = Depends(get_session)
 
 
 # PUT promocao
-@router.patch('/{promocao_id}', response_model=PromocaoSchema, status_code=status.HTTP_202_ACCEPTED)
-async def put_promocao(promocao_id: int, promocao: PromocaoSchema, db: AsyncSession = Depends(get_session), usuario_logado: UsuarioModel = Depends(get_current_user)):
+@router.patch('/{promocao_id}', response_model=PromocaoSchemaAlter, status_code=status.HTTP_202_ACCEPTED)
+async def put_promocao(promocao_id: int, promocao: PromocaoSchemaAlter, db: AsyncSession = Depends(get_session), usuario_logado: UsuarioModel = Depends(get_current_user)):
     async with db as session:
         query = select(PromocaoModel).filter(PromocaoModel.id == promocao_id).filter(
             PromocaoModel.usuario_id == usuario_logado.id)

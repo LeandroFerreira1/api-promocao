@@ -1,12 +1,9 @@
 from typing import List
-
 from fastapi import APIRouter, status, Depends, HTTPException, Response
-
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-
 from models.produto_model import ProdutoModel
-from schemas.produto_schema import ProdutoSchema, ProdutoSchemaCompleto
+from schemas.produto_schema import ProdutoSchema, ProdutoSchemaCompleto, ProdutoSchemaAlter
 from core.deps import get_session
 from scrapers.produto_scrap import buscar_produto
 
@@ -61,8 +58,8 @@ async def get_produto(produto_id: int, db: AsyncSession = Depends(get_session)):
 
 
 # PUT produto
-@router.patch('/{produto_id}', response_model=ProdutoSchema, status_code=status.HTTP_202_ACCEPTED)
-async def put_produto(produto_id: int, produto: ProdutoSchema, db: AsyncSession = Depends(get_session)):
+@router.patch('/{produto_id}', response_model=ProdutoSchemaAlter, status_code=status.HTTP_202_ACCEPTED)
+async def put_produto(produto_id: int, produto: ProdutoSchemaAlter, db: AsyncSession = Depends(get_session)):
     async with db as session:
         query = select(ProdutoModel).filter(ProdutoModel.id == produto_id)
         result = await session.execute(query)
