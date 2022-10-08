@@ -32,7 +32,7 @@ async def post_produto_ean(ean: int, db: AsyncSession = Depends(get_session)):
     return novo_produto
 
 # GET produtos
-@router.get('/', response_model=List[ProdutoSchemaCompleto])
+@router.get('/', response_model=List[ProdutoSchema])
 async def get_produtos(db: AsyncSession = Depends(get_session)):
     async with db as session:
         query = select(ProdutoModel)
@@ -43,12 +43,12 @@ async def get_produtos(db: AsyncSession = Depends(get_session)):
 
 
 # GET produto
-@router.get('/{produto_id}', response_model=List[ProdutoSchema], status_code=status.HTTP_200_OK)
+@router.get('/{produto_id}', response_model=ProdutoSchema, status_code=status.HTTP_200_OK)
 async def get_produto(produto_id: int, db: AsyncSession = Depends(get_session)):
     async with db as session:
         query = select(ProdutoModel).filter(ProdutoModel.id == produto_id)
         result = await session.execute(query)
-        produto: List[ProdutoModel] = result.scalars().unique().all()
+        produto: ProdutoModel = result.scalars().first()
 
         if produto:
             return produto
@@ -58,12 +58,12 @@ async def get_produto(produto_id: int, db: AsyncSession = Depends(get_session)):
 
 
 # PUT produto
-@router.patch('/{produto_id}', response_model=ProdutoSchemaAlter, status_code=status.HTTP_202_ACCEPTED)
+@router.patch('/{produto_id}', response_model=ProdutoSchema, status_code=status.HTTP_202_ACCEPTED)
 async def put_produto(produto_id: int, produto: ProdutoSchemaAlter, db: AsyncSession = Depends(get_session)):
     async with db as session:
         query = select(ProdutoModel).filter(ProdutoModel.id == produto_id)
         result = await session.execute(query)
-        produto_up: ProdutoModel = result.scalars().unique().one_or_none()
+        produto_up: ProdutoModel = result.scalars().first()
 
         if produto_up:
             patch_data = produto.dict(exclude_unset=True)
