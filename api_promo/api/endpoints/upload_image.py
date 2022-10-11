@@ -32,12 +32,17 @@ async def post_img(file: UploadFile = File(...)):
 
 # POST Imagem produto 
 @router.post('/{ean}', status_code=status.HTTP_201_CREATED) 
-async def post_img(ean: str,file: UploadFile = File(...)): 
+async def post_img(ean: str,file: UploadFile = File(...), db: AsyncSession = Depends(get_session)):
  
     ext = file.filename.rsplit('.', 1)[1].lower()
     filename = f'{IMAGE_FOLDER}{ean}.{ext}'
     with open(f'{filename}', "wb") as buffer: 
-        shutil.copyfileobj(file.file, buffer) 
+        shutil.copyfileobj(file.file, buffer)
+    novo_produto: ProdutoModel = ProdutoModel(
+        urlImagem=filename, id=int(ean), nome ="")
+    db.add(novo_produto)
+    await db.commit()
+    
     return{"file_name": filename}
 
 # GET imagem Produto
