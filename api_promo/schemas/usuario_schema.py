@@ -9,8 +9,9 @@ from schemas.promocao_schema import PromocaoSchema
 class UsuarioSchemaBase(BaseModel):
     id: Optional[int] = None
     nome: str
-    sobrenome: str
+    sobrenome: Optional[str]
     email: EmailStr
+    urlImagem: Optional[str]
 
     class Config:
         orm_mode = True
@@ -22,7 +23,6 @@ class UsuarioSchemaCreate(UsuarioSchemaBase):
 
 class UsuarioSchemaPromocoes(UsuarioSchemaBase):
     promocoes: Optional[List[PromocaoSchema]]
-
 
 class UsuarioSchemaUp(UsuarioSchemaBase):
     nome: Optional[str]
