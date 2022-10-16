@@ -11,8 +11,9 @@ from models.usuario_model import UsuarioModel
 from models.produto_model import ProdutoModel 
 from core.configs import settings 
 from core.deps import get_session 
-IMAGE_FOLDER = os.path.join('./data/images/')
-UPLOAD_FOLDER = os.path.join('./data/users/')
+IMAGE_FOLDER_PRODUTO = os.path.join('./data/images/')
+IMAGE_FOLDER_ESTABELECIMENTO = os.path.join('./data/estabelecimentos/')
+IMAGE_FOLDER_USER = os.path.join('./data/users/')
  
  
 router = APIRouter() 
@@ -30,7 +31,7 @@ async def post_img(id: int,file: UploadFile = File(...), db: AsyncSession = Depe
         usuario.urlImagem = caminhoAbsoluto
         await session.commit()
     ext = file.filename.rsplit('.', 1)[1].lower() 
-    filename = f'{UPLOAD_FOLDER}{usuario.id}.{ext}'
+    filename = f'{IMAGE_FOLDER_USER}{usuario.id}.{ext}'
     with open(f'{filename}', "wb") as buffer: 
         shutil.copyfileobj(file.file, buffer)
 
@@ -41,7 +42,7 @@ async def post_img(id: int,file: UploadFile = File(...), db: AsyncSession = Depe
 async def post_img(ean: str,file: UploadFile = File(...), db: AsyncSession = Depends(get_session)):
  
     ext = file.filename.rsplit('.', 1)[1].lower()
-    filename = f'{IMAGE_FOLDER}{ean}.{ext}'
+    filename = f'{IMAGE_FOLDER_PRODUTO}{ean}.{ext}'
     with open(f'{filename}', "wb") as buffer: 
         shutil.copyfileobj(file.file, buffer)
     novo_produto: ProdutoModel = ProdutoModel(
@@ -55,19 +56,31 @@ async def post_img(ean: str,file: UploadFile = File(...), db: AsyncSession = Dep
 @router.get('/{ean}', status_code=status.HTTP_200_OK)
 async def get_image_ean(ean: int):
     filename = f'{ean}.jpg'
-    file_path = os.path.join(IMAGE_FOLDER, filename)
+    file_path = os.path.join(IMAGE_FOLDER_PRODUTO, filename)
     if os.path.exists(file_path):
         return FileResponse(file_path, media_type="image/jpg")
     else:
         raise HTTPException(detail='imagem não encontrada',
                             status_code=status.HTTP_404_NOT_FOUND)
 
-# GET imagem Produto
+
+# GET imagem Estabelecimento
+@router.get('/estabelecimento/{id}', status_code=status.HTTP_200_OK)
+async def get_image_ean(id: int):
+    filename = f'{id}.jpg'
+    file_path = os.path.join(IMAGE_FOLDER_ESTABELECIMENTO, filename)
+    if os.path.exists(file_path):
+        return FileResponse(file_path, media_type="image/jpg")
+    else:
+        raise HTTPException(detail='imagem não encontrada',
+                            status_code=status.HTTP_404_NOT_FOUND)
+
+# GET imagem USER
 @router.get('/user/{id}', status_code=status.HTTP_200_OK)
 async def get_image_user(id: int):
 
     filename = f'{id}.jpg'
-    file_path = os.path.join(UPLOAD_FOLDER, filename)
+    file_path = os.path.join(IMAGE_FOLDER_USER, filename)
     if os.path.exists(file_path):
         return FileResponse(file_path, media_type="image/jpg")
     else:

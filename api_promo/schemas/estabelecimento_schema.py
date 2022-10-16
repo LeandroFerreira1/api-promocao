@@ -14,6 +14,7 @@ class EstabelecimentoSchema(BaseModel):
     endereco: str
     latitude: str
     longitude: str
+    urlImagem: Optional[str]
     usuario_estabelecimento_id: Optional[int] = None
 
     class Config:
@@ -26,6 +27,7 @@ class EstabelecimentoSchemaAlter(BaseModel):
     endereco: Optional[str]
     latitude: Optional[str]
     longitude: Optional[str]
+    urlImagem: Optional[str]
     usuario_estabelecimento_id: Optional[int] = None
 
     class Config:

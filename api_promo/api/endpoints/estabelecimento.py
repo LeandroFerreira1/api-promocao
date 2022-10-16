@@ -18,7 +18,7 @@ router = APIRouter()
 @router.post('/', status_code=status.HTTP_201_CREATED, response_model=EstabelecimentoSchema)
 async def post_estabelecimento(estabelecimento: EstabelecimentoSchema, db: AsyncSession = Depends(get_session)):
     novo_estabelecimento: EstabelecimentoModel = EstabelecimentoModel(
-        nome=estabelecimento.nome, telefone=estabelecimento.telefone, endereco=estabelecimento.endereco, latitude=estabelecimento.latitude, longitude=estabelecimento.longitude)
+        nome=estabelecimento.nome, telefone=estabelecimento.telefone, endereco=estabelecimento.endereco, latitude=estabelecimento.latitude, longitude=estabelecimento.longitude, urlImagem=estabelecimento.urlImagem)
 
     db.add(novo_estabelecimento)
     await db.commit()
