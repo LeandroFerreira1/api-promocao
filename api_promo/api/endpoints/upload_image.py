@@ -19,8 +19,8 @@ IMAGE_FOLDER_USER = os.path.join('./data/users/')
 router = APIRouter() 
  
  
-# POST Imagem produto 
-@router.post('/{id}', status_code=status.HTTP_201_CREATED) 
+# POST Imagem Usuario 
+@router.post('/user/{id}', status_code=status.HTTP_201_CREATED) 
 async def post_img(id: int,file: UploadFile = File(...), db: AsyncSession = Depends(get_session)): 
     async with db as session:
         query = select(UsuarioModel).filter(UsuarioModel.id == id)
