@@ -10,7 +10,7 @@ class PromocaoModel(settings.DBBaseModel):
     id = Column(Integer, primary_key=True, autoincrement=True)
     valor_original = Column(String(256), nullable=True)
     valor_promocional = Column(String(256), nullable=True)
-    data_validade = Column(Date, index=True)
+    data_validade = Column(String(256), nullable=True)
     usuario_id = Column(Integer, ForeignKey('usuario.id'))
     estabelecimento_id = Column(Integer, ForeignKey('estabelecimento.id'))
     produto_id = Column(Integer, ForeignKey('produto.id'))
