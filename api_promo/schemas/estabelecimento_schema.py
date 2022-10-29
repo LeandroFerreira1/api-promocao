@@ -37,7 +37,7 @@ class Promocao(BaseModel):
     id: Optional[int] = None
     valor_original: str
     valor_promocional: Optional[str]
-    data_validade: Optional[date]
+    data_validade: Optional[str]
     produto: Optional[ProdutoSchema]
 
     class Config:
