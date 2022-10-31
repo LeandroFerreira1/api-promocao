@@ -35,6 +35,16 @@ async def get_promocoes(db: AsyncSession = Depends(get_session)):
 
         return promocoes
 
+# GET promocao por usuario
+@router.get('/usuario/{usuario_id}', response_model=List[PromocaoSchema])
+async def get_promocoes(usuario_id: int, db: AsyncSession = Depends(get_session)):
+    async with db as session:
+        query = select(PromocaoModel).filter(PromocaoModel.usuario_id == usuario_id)
+        result = await session.execute(query)
+        promocoes: List[PromocaoModel] = result.scalars().unique().all()
+
+        return promocoes
+
 
 # GET promocao
 @router.get('/{promocao_id}', response_model=PromocaoSchema, status_code=status.HTTP_200_OK)
