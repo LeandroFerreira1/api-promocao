@@ -13,6 +13,7 @@ class UsuarioModel(settings.DBBaseModel):
     email = Column(String(256), index=True, nullable=False, unique=True)
     senha = Column(String(256), nullable=False)
     urlImagem = Column(String(256), nullable=True)
+    pontuacao = Column(Integer, nullable=True)
     promocoes = relationship(
         "PromocaoModel",
         cascade="all,delete-orphan",

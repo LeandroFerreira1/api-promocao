@@ -12,6 +12,7 @@ class UsuarioSchemaBase(BaseModel):
     sobrenome: Optional[str]
     email: EmailStr
     urlImagem: Optional[str]
+    pontuacao: Optional[str]
 
     class Config:
         orm_mode = True
@@ -23,6 +24,12 @@ class UsuarioSchemaCreate(UsuarioSchemaBase):
 
 class UsuarioSchemaPromocoes(UsuarioSchemaBase):
     promocoes: Optional[List[PromocaoSchema]]
+
+class UsuarioSchemaPonto (BaseModel):
+    pontuacao: Optional[int]
+
+    class Config:
+        orm_mode = True
 
 class UsuarioSchemaUp(UsuarioSchemaBase):
     nome: Optional[str]

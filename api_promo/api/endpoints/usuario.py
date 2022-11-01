@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.exc import IntegrityError
 from models.usuario_model import UsuarioModel
-from schemas.usuario_schema import UsuarioSchemaBase, UsuarioSchemaCreate, UsuarioSchemaUp, UsuarioSchemaPromocoes
+from schemas.usuario_schema import UsuarioSchemaBase, UsuarioSchemaCreate, UsuarioSchemaUp, UsuarioSchemaPromocoes, UsuarioSchemaPonto
 from core.deps import get_session, get_current_user
 from core.security import gerar_hash_senha
 from core.auth import autenticar, criar_token_acesso
@@ -26,7 +26,7 @@ def get_logado(usuario_logado: UsuarioModel = Depends(get_current_user)):
 @router.post('/signup', status_code=status.HTTP_201_CREATED, response_model=UsuarioSchemaBase)
 async def post_usuario(usuario: UsuarioSchemaCreate, db: AsyncSession = Depends(get_session)):
     
-    novo_usuario: UsuarioModel = UsuarioModel(nome=usuario.nome, sobrenome=usuario.sobrenome,
+    novo_usuario: UsuarioModel = UsuarioModel(nome=usuario.nome, sobrenome=usuario.sobrenome, pontuacao= 0,
                                               email=usuario.email, senha=gerar_hash_senha(usuario.senha))              
     async with db as session:
         try:
@@ -89,6 +89,20 @@ async def put_usuario(usuario: UsuarioSchemaUp, usuario_logado: UsuarioModel = D
         else:
             raise HTTPException(detail='Usuário não encontrado.',
                                 status_code=status.HTTP_404_NOT_FOUND)
+
+
+# patch Usuario Pontuação
+@router.patch('/pontuacao/{ponto}', response_model=UsuarioSchemaBase, status_code=status.HTTP_202_ACCEPTED)
+async def put_usuario(ponto: int, usuario_logado: UsuarioModel = Depends(get_current_user), db: AsyncSession = Depends(get_session)):
+    async with db as session:
+        query = select(UsuarioModel).filter(UsuarioModel.id == usuario_logado.id)
+        result = await session.execute(query)
+        usuario_up: UsuarioSchemaBase = result.scalars().unique().one_or_none()
+
+        usuario_up.pontuacao = usuario_up.pontuacao + ponto
+
+        await session.commit()
+        return usuario_up
 
 
 # DELETE usuario
