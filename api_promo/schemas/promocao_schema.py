@@ -1,7 +1,7 @@
 from typing import Optional
 from datetime import date
 
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from schemas.estabelecimento_schema import EstabelecimentoSchema
 from schemas.produto_schema import ProdutoSchema
 
@@ -30,6 +30,16 @@ class PromocaoSchemaAlter(BaseModel):
     class Config:
         orm_mode = True
 
+class UsuarioSchemaBase(BaseModel):
+    id: Optional[int] = None
+    nome: str
+    sobrenome: Optional[str]
+    email: EmailStr
+    urlImagem: Optional[str]
+
+    class Config:
+        orm_mode = True
+
 class PromocaoSchema(BaseModel):
     id: Optional[int] = None
     valor_original: str
@@ -37,6 +47,7 @@ class PromocaoSchema(BaseModel):
     data_validade: Optional[str]
     estabelecimento: Optional[EstabelecimentoSchema]
     produto: Optional[ProdutoSchema]
+    criador: Optional[UsuarioSchemaBase]
 
     class Config:
         orm_mode = True
