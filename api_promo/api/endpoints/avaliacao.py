@@ -37,14 +37,13 @@ async def get_avaliacoes_usuario(usuario_logado: UsuarioModel = Depends(get_curr
         return avaliacoes
 
 # GET avaliacao
-@router.get('/avaliacoes_promocao/{promocao_id}', response_model=List[AvaliacaoPromocaoSchema])
+@router.get('/avaliacoes_promocao/{promocao_id}', response_model=List[AvaliacaoSchemaBase], status_code=status.HTTP_200_OK)
 async def get_avaliacoes_promocao(promocao_id: int, db: AsyncSession = Depends(get_session)):
     async with db as session:
         query = select(AvaliacaoModel).filter(
             AvaliacaoModel.promocao_id == promocao_id)
         result = await session.execute(query)
         avaliacoes: List[AvaliacaoModel] = result.scalars().unique().all()
-
         return avaliacoes
 
 
