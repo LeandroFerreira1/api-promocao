@@ -3,7 +3,7 @@ from typing import List
 
 from pydantic import BaseModel, EmailStr
 
-from schemas.promocao_schema import PromocaoSchema
+from schemas.promocao_schema import PromocaoSchemaBase
 
 
 class UsuarioSchemaBase(BaseModel):
@@ -12,7 +12,7 @@ class UsuarioSchemaBase(BaseModel):
     sobrenome: Optional[str]
     email: EmailStr
     urlImagem: Optional[str]
-    pontuacao: Optional[str]
+    pontuacao: Optional[int]
 
     class Config:
         orm_mode = True
@@ -23,7 +23,7 @@ class UsuarioSchemaCreate(UsuarioSchemaBase):
 
 
 class UsuarioSchemaPromocoes(UsuarioSchemaBase):
-    promocoes: Optional[List[PromocaoSchema]]
+    promocoes: Optional[List[PromocaoSchemaBase]]
 
 class UsuarioSchemaPonto (BaseModel):
     pontuacao: Optional[int]
