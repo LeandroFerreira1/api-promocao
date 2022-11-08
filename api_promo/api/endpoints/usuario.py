@@ -50,6 +50,17 @@ async def get_usuarios(db: AsyncSession = Depends(get_session)):
         return usuarios
 
 
+# GET Usuarios pontuacao
+@router.get('/ranking/', response_model=List[UsuarioSchemaBase])
+async def get_usuarios(db: AsyncSession = Depends(get_session)):
+    async with db as session:
+        query = select(UsuarioModel).order_by(UsuarioModel.pontuacao)
+        result = await session.execute(query)
+        usuarios: List[UsuarioSchemaBase] = result.scalars().unique().all()
+
+        return usuarios
+
+
 # GET Usuario
 @router.get('/{usuario_id}', response_model=UsuarioSchemaPromocoes, status_code=status.HTTP_200_OK)
 async def get_usuario(usuario_id: int, db: AsyncSession = Depends(get_session)):
