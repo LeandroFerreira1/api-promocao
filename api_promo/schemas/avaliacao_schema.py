@@ -14,6 +14,7 @@ class AvaliacaoSchemaBase(BaseModel):
     descricao: Optional[str]
     longitude: Optional[str]
     latitude: Optional[str]
+    data_avaliacao: Optional[str]
     nota: int
     
     class Config:
@@ -24,6 +25,7 @@ class AvaliacaoSchemaAlter(BaseModel):
     promocao_id: Optional[int]
     descricao: Optional[str]
     longitude: Optional[str]
+    data_avaliacao: Optional[str]
     latitude: Optional[str]
     nota: Optional[int]
     

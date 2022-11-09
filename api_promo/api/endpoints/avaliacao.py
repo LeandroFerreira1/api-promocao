@@ -10,6 +10,10 @@ from models.usuario_model import UsuarioModel
 from schemas.avaliacao_schema import AvaliacaoSchema
 from schemas.avaliacao_schema import AvaliacaoSchemaBase, AvaliacaoPromocaoSchema, AvaliacaoSchemaAlter
 from core.deps import get_session, get_current_user
+from datetime import date, datetime
+
+
+
 
 
 router = APIRouter()
@@ -18,7 +22,7 @@ router = APIRouter()
 @router.post('/', status_code=status.HTTP_201_CREATED, response_model=AvaliacaoSchemaBase)
 async def post_avaliacao(avaliacao: AvaliacaoSchemaBase, usuario_logado: UsuarioModel = Depends(get_current_user), db: AsyncSession = Depends(get_session)):
     nova_avaliacao: AvaliacaoModel = AvaliacaoModel(
-        descricao=avaliacao.descricao, longitude=avaliacao.longitude, latitude=avaliacao.latitude, nota=avaliacao.nota, usuario_id=usuario_logado.id, promocao_id=avaliacao.promocao_id)
+        descricao=avaliacao.descricao, longitude=avaliacao.longitude, latitude=avaliacao.latitude, data_avaliacao=date.today().strftime('%d/%m/%Y'), nota=avaliacao.nota, usuario_id=usuario_logado.id, promocao_id=avaliacao.promocao_id)
 
     db.add(nova_avaliacao)
     await db.commit()

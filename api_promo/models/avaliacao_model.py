@@ -13,5 +13,6 @@ class AvaliacaoModel(settings.DBBaseModel):
     longitude = Column(String(256), nullable=True)
     latitude = Column(String(256), nullable=True)
     nota = Column(Integer, nullable=False)
+    data_avaliacao = Column(String(256), nullable=False)
     criador = relationship("UsuarioModel", back_populates='avaliacoes', lazy='joined')
     promocao = relationship("PromocaoModel", back_populates="avaliacoes", lazy='joined')

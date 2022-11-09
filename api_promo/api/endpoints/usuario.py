@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
+from sqlalchemy import desc
 from sqlalchemy.exc import IntegrityError
 from models.usuario_model import UsuarioModel
 from schemas.usuario_schema import UsuarioSchemaBase, UsuarioSchemaCreate, UsuarioSchemaUp, UsuarioSchemaPromocoes, UsuarioSchemaPonto
@@ -54,7 +55,7 @@ async def get_usuarios(db: AsyncSession = Depends(get_session)):
 @router.get('/ranking/', response_model=List[UsuarioSchemaBase])
 async def get_usuarios(db: AsyncSession = Depends(get_session)):
     async with db as session:
-        query = select(UsuarioModel).order_by(UsuarioModel.pontuacao)
+        query = select(UsuarioModel).order_by(desc(UsuarioModel.pontuacao))
         result = await session.execute(query)
         usuarios: List[UsuarioSchemaBase] = result.scalars().unique().all()
 
