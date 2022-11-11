@@ -67,10 +67,10 @@ async def get_image_ean(ean: int):
 # GET imagem Estabelecimento
 @router.get('/estabelecimento/{id}', status_code=status.HTTP_200_OK)
 async def get_image_ean(id: int):
-    filename = f'{id}.jpg'
+    filename = f'{id}.png'
     file_path = os.path.join(IMAGE_FOLDER_ESTABELECIMENTO, filename)
     if os.path.exists(file_path):
-        return FileResponse(file_path, media_type="image/jpg")
+        return FileResponse(file_path, media_type="image/png")
     else:
         raise HTTPException(detail='imagem não encontrada',
                             status_code=status.HTTP_404_NOT_FOUND)
