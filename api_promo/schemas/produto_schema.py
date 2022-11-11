@@ -12,7 +12,7 @@ class ProdutoSchema(BaseModel):
     nome: str
     marca: Optional[str]
     departamento_id: Optional[int] = None
-    urlImagem: str
+    urlImagem: Optional[str]
 
     class Config:
         orm_mode = True
@@ -31,7 +31,7 @@ class ProdutoSchemaCompleto(BaseModel):
     id: int
     nome: str
     marca: Optional[str]
-    urlImagem: str
+    urlImagem: Optional[str]
     departamentos: Optional[DepartamentoSchema]
 
     class Config:

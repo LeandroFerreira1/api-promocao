@@ -14,8 +14,7 @@ router = APIRouter()
 @router.post('/', status_code=status.HTTP_201_CREATED, response_model=ProdutoSchema)
 async def post_produto(produto: ProdutoSchema, db: AsyncSession = Depends(get_session)):
     novo_produto: ProdutoModel = ProdutoModel(
-        id=produto.id, nome=produto.nome, marca=produto.marca, departamento_id=produto.departamento_id, urlImagem=produto.urlImagem)
-
+        id=produto.id, nome=produto.nome, marca=produto.marca, departamento_id=produto.departamento_id)
     db.add(novo_produto)
     await db.commit()
 
@@ -41,7 +40,6 @@ async def get_produtos(db: AsyncSession = Depends(get_session)):
 
         return produtos
 
-
 # GET produto
 @router.get('/{produto_id}', response_model=ProdutoSchema, status_code=status.HTTP_200_OK)
 async def get_produto(produto_id: int, db: AsyncSession = Depends(get_session)):
@@ -55,7 +53,6 @@ async def get_produto(produto_id: int, db: AsyncSession = Depends(get_session)):
         else:
             raise HTTPException(detail='Produto não encontrado',
                                 status_code=status.HTTP_404_NOT_FOUND)
-
 
 # PUT produto
 @router.patch('/{produto_id}', response_model=ProdutoSchema, status_code=status.HTTP_202_ACCEPTED)
@@ -75,7 +72,6 @@ async def put_produto(produto_id: int, produto: ProdutoSchemaAlter, db: AsyncSes
         else:
             raise HTTPException(detail='Produto não encontrado',
                                 status_code=status.HTTP_404_NOT_FOUND)
-
 
 # DELETE produto
 @router.delete('/{produto_id}', status_code=status.HTTP_204_NO_CONTENT)
