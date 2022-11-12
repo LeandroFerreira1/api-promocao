@@ -16,9 +16,7 @@ router = APIRouter()
 # POST conquista
 @router.post('/', status_code=status.HTTP_201_CREATED, response_model=ConquistaSchema)
 async def post_conquista(conquista: ConquistaSchema, db: AsyncSession = Depends(get_session)):
-    novo_conquista: ConquistaModel = ConquistaModel(
-        nome=conquista.nome, valor=conquista.valor)
-
+    novo_conquista: ConquistaModel = ConquistaModel(nome=conquista.nome, valor=conquista.valor, urlimagem=conquista.urlimagem)
     db.add(novo_conquista)
     await db.commit()
 

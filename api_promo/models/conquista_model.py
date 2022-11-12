@@ -9,6 +9,7 @@ class ConquistaModel(settings.DBBaseModel):
     id = Column(Integer, primary_key=True, autoincrement=True)
     nome = Column(String(256), nullable=False)
     valor = Column(Integer, nullable=False)
+    urlimagem = Column(String(256), nullable=True)
     usuarios = relationship(
         "UsuarioConquistaModel",
         cascade="all,delete-orphan",

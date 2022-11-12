@@ -14,6 +14,7 @@ from core.deps import get_session
 IMAGE_FOLDER_PRODUTO = os.path.join('./data/images/')
 IMAGE_FOLDER_ESTABELECIMENTO = os.path.join('./data/estabelecimentos/')
 IMAGE_FOLDER_USER = os.path.join('./data/users/')
+IMAGE_FOLDER_TAGS = os.path.join('./data/tags/')
  
  
 router = APIRouter() 
@@ -85,6 +86,19 @@ async def get_image_user(id: int):
     file_path = os.path.join(IMAGE_FOLDER_USER, filename)
     if os.path.exists(file_path):
         return FileResponse(file_path, media_type="image/jpg")
+    else:
+        raise HTTPException(detail='imagem não encontrada',
+                            status_code=status.HTTP_404_NOT_FOUND)
+
+
+# GET imagem TAG
+@router.get('/tags/{id}', status_code=status.HTTP_200_OK)
+async def get_image_tag(id: int):
+
+    filename = f'{id}.png'
+    file_path = os.path.join(IMAGE_FOLDER_TAGS, filename)
+    if os.path.exists(file_path):
+        return FileResponse(file_path, media_type="image/png")
     else:
         raise HTTPException(detail='imagem não encontrada',
                             status_code=status.HTTP_404_NOT_FOUND)
