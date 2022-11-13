@@ -10,10 +10,4 @@ class ConquistaModel(settings.DBBaseModel):
     nome = Column(String(256), nullable=False)
     valor = Column(Integer, nullable=False)
     urlimagem = Column(String(256), nullable=True)
-    usuarios = relationship(
-        "UsuarioConquistaModel",
-        cascade="all,delete-orphan",
-        back_populates="conquistas",
-        uselist=True,
-        lazy="joined"
-    )
+    conquista = relationship("UsuarioConquistaModel", back_populates="conquista", lazy='subquery')

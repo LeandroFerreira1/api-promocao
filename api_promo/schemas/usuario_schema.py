@@ -4,6 +4,7 @@ from typing import List
 from pydantic import BaseModel, EmailStr
 
 from schemas.promocao_schema import PromocaoSchemaBase
+from schemas.conquista_schema import ConquistaSchema
 
 
 class UsuarioSchemaBase(BaseModel):

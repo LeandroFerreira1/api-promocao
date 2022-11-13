@@ -9,7 +9,7 @@ class UsuarioConquistaModel(settings.DBBaseModel):
 
     usuario_id = Column(Integer, ForeignKey('usuario.id'), primary_key=True)
     conquista_id = Column(Integer, ForeignKey('conquista.id'), primary_key=True)
-    data_canquista = Column(Date, nullable=False)
+    data_canquista = Column(Date, nullable=True)
     criador = relationship("UsuarioModel", back_populates='conquistas', lazy='joined')
-    conquistas = relationship("ConquistaModel", back_populates="usuarios", lazy='joined')
+    conquista = relationship("ConquistaModel", back_populates="conquista", lazy='joined')
     
