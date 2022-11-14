@@ -11,6 +11,7 @@ from api.endpoints import conquista
 from api.endpoints import avaliacao
 from api.endpoints import upload_image
 from api.endpoints import departamento
+from api.endpoints import curtida
 
 api_router = APIRouter()
 
@@ -18,6 +19,8 @@ api_router.include_router(
     promocao.router, prefix='/promocoes', tags=['promocoes'])
 api_router.include_router(
     avaliacao.router, prefix='/avaliacoes', tags=['avaliacoes'])
+api_router.include_router(
+    curtida.router, prefix='/curtidas', tags=['curtidas'])
 api_router.include_router(
     estabelecimento.router, prefix='/estabelecimentos', tags=['estabelecimentos'])
 api_router.include_router(

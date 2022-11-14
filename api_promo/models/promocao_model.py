@@ -17,5 +17,6 @@ class PromocaoModel(settings.DBBaseModel):
     criador = relationship("UsuarioModel", back_populates='promocoes', lazy='joined')
     produto = relationship("ProdutoModel", back_populates="promocoes", lazy='joined')
     estabelecimento = relationship("EstabelecimentoModel", back_populates="promocoes", lazy='joined')
-    avaliacoes = relationship("AvaliacaoModel", back_populates="promocao")
+    avaliacoes = relationship("AvaliacaoModel", back_populates="promocao", cascade="all,delete-orphan",)
+    curtidas = relationship("CurtidaModel", back_populates="promocao", lazy='joined', cascade="all,delete-orphan",)
 

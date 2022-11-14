@@ -28,6 +28,13 @@ class UsuarioModel(settings.DBBaseModel):
         uselist=True,
         lazy="joined"
     )
+    curtidas = relationship(
+        "CurtidaModel",
+        cascade="all,delete-orphan",
+        back_populates="criador",
+        uselist=True,
+        lazy="joined"
+    )
     conquistas = relationship(
         "UsuarioConquistaModel",
         cascade="all,delete-orphan",

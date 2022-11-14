@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 from datetime import date
 
 from pydantic import BaseModel, EmailStr
@@ -40,6 +40,14 @@ class UsuarioSchemaBase(BaseModel):
     class Config:
         orm_mode = True
 
+
+class Curtidas(BaseModel):
+    usuario_id: int
+    promocao_id: int
+    
+    class Config:
+        orm_mode = True
+
 class PromocaoSchema(BaseModel):
     id: Optional[int] = None
     valor_original: str
@@ -48,6 +56,7 @@ class PromocaoSchema(BaseModel):
     estabelecimento: Optional[EstabelecimentoSchema]
     produto: Optional[ProdutoSchema]
     criador: Optional[UsuarioSchemaBase]
+    curtidas: Optional[List[Curtidas]]
 
     class Config:
         orm_mode = True

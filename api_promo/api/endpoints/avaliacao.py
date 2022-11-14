@@ -12,10 +12,6 @@ from schemas.avaliacao_schema import AvaliacaoSchemaBase, AvaliacaoPromocaoSchem
 from core.deps import get_session, get_current_user
 from datetime import date, datetime
 
-
-
-
-
 router = APIRouter()
 
 # POST avaliacao
@@ -41,7 +37,7 @@ async def get_avaliacoes_usuario(usuario_logado: UsuarioModel = Depends(get_curr
         return avaliacoes
 
 # GET avaliacao
-@router.get('/avaliacoes_promocao/{promocao_id}', response_model=List[AvaliacaoSchemaBase], status_code=status.HTTP_200_OK)
+@router.get('/avaliacoes_promocao/{promocao_id}', response_model=List[AvaliacaoPromocaoSchema], status_code=status.HTTP_200_OK)
 async def get_avaliacoes_promocao(promocao_id: int, db: AsyncSession = Depends(get_session)):
     async with db as session:
         query = select(AvaliacaoModel).filter(
@@ -63,7 +59,7 @@ async def get_avaliacao_usuario(promocao_id: int, db: AsyncSession = Depends(get
         if avaliacao:
             return avaliacao
         else:
-            raise HTTPException(detail='Promoção não encontrada',
+            raise HTTPException(detail='avaliação não encontrada',
                                 status_code=status.HTTP_404_NOT_FOUND)
 
 

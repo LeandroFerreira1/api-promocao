@@ -8,3 +8,4 @@ from models.conquista_model import ConquistaModel
 from models.usuario_conquista_model import UsuarioConquistaModel
 from models.avaliacao_model import AvaliacaoModel
 from models.departamento_model import DepartamentoModel
+from models.curtida_model import CurtidaModel
