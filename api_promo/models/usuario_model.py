@@ -1,7 +1,7 @@
 from sqlalchemy import Integer, String, Column, Boolean
 from sqlalchemy.orm import relationship
 
-from core.configs import settings
+from api_promo.core.configs import settings
 
 
 class UsuarioModel(settings.DBBaseModel):

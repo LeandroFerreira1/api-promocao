@@ -7,11 +7,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy import desc
 from sqlalchemy.exc import IntegrityError
-from models.usuario_model import UsuarioModel
-from schemas.usuario_schema import UsuarioSchemaBase, UsuarioSchemaCreate, UsuarioSchemaUp, UsuarioSchemaPromocoes, UsuarioSchemaPonto
-from core.deps import get_session, get_current_user
-from core.security import gerar_hash_senha
-from core.auth import autenticar, criar_token_acesso
+from api_promo.models.usuario_model import UsuarioModel
+from api_promo.schemas.usuario_schema import UsuarioSchemaBase, UsuarioSchemaCreate, UsuarioSchemaUp, UsuarioSchemaPromocoes, UsuarioSchemaPonto
+from api_promo.core.deps import get_session, get_current_user
+from api_promo.core.security import gerar_hash_senha
+from api_promo.core.auth import autenticar, criar_token_acesso
 
 
 router = APIRouter()

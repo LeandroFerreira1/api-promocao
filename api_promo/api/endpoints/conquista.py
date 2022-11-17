@@ -5,9 +5,9 @@ from fastapi import APIRouter, status, Depends, HTTPException, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
-from models.conquista_model import ConquistaModel
-from schemas.conquista_schema import ConquistaSchema, ConquistaSchemaAlter
-from core.deps import get_session
+from api_promo.models.conquista_model import ConquistaModel
+from api_promo.schemas.conquista_schema import ConquistaSchema, ConquistaSchemaAlter
+from api_promo.core.deps import get_session
 
 
 router = APIRouter()

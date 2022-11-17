@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
-from core.configs import settings
-from api.api import api_router
+from api_promo.core.configs import settings
+from api_promo.api.api import api_router
 
 
 app = FastAPI(title='API - PROMO')

@@ -1,7 +1,7 @@
 from sqlalchemy import Integer, String, Column, Date, ForeignKey,BigInteger
 from sqlalchemy.orm import relationship
 
-from core.configs import settings
+from api_promo.core.configs import settings
 
 
 class PromocaoModel(settings.DBBaseModel):

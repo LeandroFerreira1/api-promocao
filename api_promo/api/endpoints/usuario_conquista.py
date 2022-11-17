@@ -5,11 +5,11 @@ from fastapi import APIRouter, status, Depends, HTTPException, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
-from models.usuario_conquista_model import UsuarioConquistaModel
-from models.usuario_model import UsuarioModel
-from schemas.usuario_conquista_schema import UsuarioConquistaSchema
-from schemas.usuario_conquista_schema import UsuarioConquistaSchemaBase
-from core.deps import get_session, get_current_user
+from api_promo.models.usuario_conquista_model import UsuarioConquistaModel
+from api_promo.models.usuario_model import UsuarioModel
+from api_promo.schemas.usuario_conquista_schema import UsuarioConquistaSchema
+from api_promo.schemas.usuario_conquista_schema import UsuarioConquistaSchemaBase
+from api_promo.core.deps import get_session, get_current_user
 
 
 router = APIRouter()

@@ -5,10 +5,10 @@ from fastapi import APIRouter, status, Depends, HTTPException, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
-from models.departamento_model import DepartamentoModel
-from models.usuario_model import UsuarioModel
-from schemas.departamento_schema import DepartamentoSchema
-from core.deps import get_session, get_current_user
+from api_promo.models.departamento_model import DepartamentoModel
+from api_promo.models.usuario_model import UsuarioModel
+from api_promo.schemas.departamento_schema import DepartamentoSchema
+from api_promo.core.deps import get_session, get_current_user
 
 
 router = APIRouter()

@@ -8,11 +8,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.exc import IntegrityError
 
-from models.usuario_estabelecimento_model import UsuarioEstabelecimentoModel
-from schemas.usuario_estabelecimento_schema import UsuarioEstabelecimentoSchemaBase, UsuarioEstabelecimentoSchemaCreate, UsuarioEstabelecimentoSchemaUp, UsuarioEstabelecimentoSchemaEstabelecimentos
-from core.deps import get_session, get_current_user_estabelecimento
-from core.security import gerar_hash_senha
-from core.auth import autenticar, criar_token_acesso
+from api_promo.models.usuario_estabelecimento_model import UsuarioEstabelecimentoModel
+from api_promo.schemas.usuario_estabelecimento_schema import UsuarioEstabelecimentoSchemaBase, UsuarioEstabelecimentoSchemaCreate, UsuarioEstabelecimentoSchemaUp, UsuarioEstabelecimentoSchemaEstabelecimentos
+from api_promo.core.deps import get_session, get_current_user_estabelecimento
+from api_promo.core.security import gerar_hash_senha
+from api_promo.core.auth import autenticar, criar_token_acesso
 
 
 router = APIRouter()

@@ -1,17 +1,17 @@
 import imp
 from fastapi import APIRouter
 
-from api.endpoints import promocao
-from api.endpoints import usuario
-from api.endpoints import produto
-from api.endpoints import estabelecimento
-from api.endpoints import usuario_estabelecimento
-from api.endpoints import usuario_conquista
-from api.endpoints import conquista
-from api.endpoints import avaliacao
-from api.endpoints import upload_image
-from api.endpoints import departamento
-from api.endpoints import curtida
+from api_promo.api.endpoints import promocao
+from api_promo.api.endpoints import usuario
+from api_promo.api.endpoints import produto
+from api_promo.api.endpoints import estabelecimento
+from api_promo.api.endpoints import usuario_estabelecimento
+from api_promo.api.endpoints import usuario_conquista
+from api_promo.api.endpoints import conquista
+from api_promo.api.endpoints import avaliacao
+from api_promo.api.endpoints import upload_image
+from api_promo.api.endpoints import departamento
+from api_promo.api.endpoints import curtida
 
 api_router = APIRouter()
 

@@ -7,14 +7,18 @@ from fastapi.responses import FileResponse
  
 from sqlalchemy.ext.asyncio import AsyncSession 
 from sqlalchemy.future import select 
-from models.usuario_model import UsuarioModel 
-from models.produto_model import ProdutoModel 
-from core.configs import settings 
-from core.deps import get_session 
-IMAGE_FOLDER_PRODUTO = os.path.join('./data/images/')
-IMAGE_FOLDER_ESTABELECIMENTO = os.path.join('./data/estabelecimentos/')
-IMAGE_FOLDER_USER = os.path.join('./data/users/')
-IMAGE_FOLDER_TAGS = os.path.join('./data/tags/')
+
+from api_promo.models.usuario_model import UsuarioModel 
+from api_promo.models.produto_model import ProdutoModel 
+from api_promo.core.configs import settings 
+from api_promo.core.deps import get_session 
+
+dirname = os.path.dirname(__file__)
+
+IMAGE_FOLDER_PRODUTO = os.path.join(dirname, '/../../data/images/')
+IMAGE_FOLDER_ESTABELECIMENTO = os.path.join(dirname, '/../../data/estabelecimentos/')
+IMAGE_FOLDER_USER = os.path.join(dirname, '/../../data/users/')
+IMAGE_FOLDER_TAGS = os.path.join(dirname, '../../data/tags/')
  
  
 router = APIRouter() 

@@ -3,7 +3,7 @@ from typing import List
 
 from pydantic import BaseModel, EmailStr
 
-from schemas.estabelecimento_schema import EstabelecimentoSchema
+from api_promo.schemas.estabelecimento_schema import EstabelecimentoSchema
 
 
 class UsuarioEstabelecimentoSchemaBase(BaseModel):

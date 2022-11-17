@@ -7,11 +7,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from pydantic import BaseModel
 
-from core.database import Session
-from core.auth import oauth2_schema
-from core.configs import settings
-from models.usuario_model import UsuarioModel
-from models.usuario_estabelecimento_model import UsuarioEstabelecimentoModel
+from api_promo.core.database import Session
+from api_promo.core.auth import oauth2_schema
+from api_promo.core.configs import settings
+from api_promo.models.usuario_model import UsuarioModel
+from api_promo.models.usuario_estabelecimento_model import UsuarioEstabelecimentoModel
 
 
 class TokenData(BaseModel):

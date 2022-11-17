@@ -4,7 +4,8 @@ from typing import List
 from datetime import date
 
 from pydantic import BaseModel
-from schemas.produto_schema import ProdutoSchema
+
+from api_promo.schemas.produto_schema import ProdutoSchema
 
     
 class EstabelecimentoSchema(BaseModel):

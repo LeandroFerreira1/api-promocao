@@ -10,10 +10,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from jose import jwt
 
-from models.usuario_model import UsuarioModel
-from models.usuario_estabelecimento_model import UsuarioEstabelecimentoModel
-from core.configs import settings
-from core.security import verificar_senha
+from api_promo.models.usuario_model import UsuarioModel
+from api_promo.models.usuario_estabelecimento_model import UsuarioEstabelecimentoModel
+from api_promo.core.configs import settings
+from api_promo.core.security import verificar_senha
 
 from pydantic import EmailStr
 

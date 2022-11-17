@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-from models.produto_model import ProdutoModel
+
+from api_promo.models.produto_model import ProdutoModel
 
 
 cabecalho = {'user-agent' : 'Mozzila/5.0'}

@@ -2,8 +2,9 @@ from typing import Optional
 from datetime import date
 
 from pydantic import BaseModel
-from schemas.promocao_schema import PromocaoSchemaBase
-from schemas.usuario_schema import UsuarioSchemaBase
+
+from api_promo.schemas.promocao_schema import PromocaoSchemaBase
+from api_promo.schemas.usuario_schema import UsuarioSchemaBase
 
 class CurtidaSchemaBase(BaseModel):
     usuario_id: int

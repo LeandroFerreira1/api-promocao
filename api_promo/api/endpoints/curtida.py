@@ -5,11 +5,11 @@ from fastapi import APIRouter, status, Depends, HTTPException, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
-from models.curtida_model import CurtidaModel
-from schemas.curtida_schema import CurtidaSchemaBase, CurtidaPromocaoSchema
-from core.deps import get_session
-from models.usuario_model import UsuarioModel
-from core.deps import get_session, get_current_user
+from api_promo.models.curtida_model import CurtidaModel
+from api_promo.schemas.curtida_schema import CurtidaSchemaBase, CurtidaPromocaoSchema
+from api_promo.core.deps import get_session
+from api_promo.models.usuario_model import UsuarioModel
+from api_promo.core.deps import get_session, get_current_user
 
 
 router = APIRouter()

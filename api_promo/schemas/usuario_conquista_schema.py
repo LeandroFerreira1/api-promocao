@@ -3,8 +3,9 @@ from datetime import date
 from typing import List
 
 from pydantic import BaseModel
-from schemas.conquista_schema import ConquistaSchema
-from schemas.usuario_schema import UsuarioSchemaBase
+
+from api_promo.schemas.conquista_schema import ConquistaSchema
+from api_promo.schemas.usuario_schema import UsuarioSchemaBase
 
 
 class UsuarioConquistaSchemaBase(BaseModel):

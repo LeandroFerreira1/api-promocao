@@ -2,10 +2,11 @@ from typing import List
 from fastapi import APIRouter, status, Depends, HTTPException, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from models.produto_model import ProdutoModel
-from schemas.produto_schema import ProdutoSchema, ProdutoSchemaCompleto, ProdutoSchemaAlter
-from core.deps import get_session
-from scrapers.produto_scrap import buscar_produto
+
+from api_promo.models.produto_model import ProdutoModel
+from api_promo.schemas.produto_schema import ProdutoSchema, ProdutoSchemaCompleto, ProdutoSchemaAlter
+from api_promo.core.deps import get_session
+from api_promo.scrapers.produto_scrap import buscar_produto
 
 
 router = APIRouter()

@@ -4,7 +4,8 @@ from pydantic import BaseModel
 from typing import Optional
 from typing import List
 from sqlalchemy import BigInteger
-from schemas.departamento_schema import DepartamentoSchema
+
+from api_promo.schemas.departamento_schema import DepartamentoSchema
 
 
 class ProdutoSchema(BaseModel):

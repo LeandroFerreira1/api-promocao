@@ -2,8 +2,9 @@ from typing import Optional, List
 from datetime import date
 
 from pydantic import BaseModel, EmailStr
-from schemas.estabelecimento_schema import EstabelecimentoSchema
-from schemas.produto_schema import ProdutoSchema
+
+from api_promo.schemas.estabelecimento_schema import EstabelecimentoSchema
+from api_promo.schemas.produto_schema import ProdutoSchema
 
 
 class PromocaoSchemaBase(BaseModel):
