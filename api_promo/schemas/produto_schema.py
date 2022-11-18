@@ -9,7 +9,8 @@ from api_promo.schemas.departamento_schema import DepartamentoSchema
 
 
 class ProdutoSchema(BaseModel):
-    id: int
+    id: Optional[int] = None
+    ean: str
     nome: str
     marca: Optional[str]
     departamento_id: Optional[int] = None
@@ -19,7 +20,8 @@ class ProdutoSchema(BaseModel):
         orm_mode = True
 
 class ProdutoSchemaAlter(BaseModel):
-    id: Optional[int]
+    id: Optional[int] = None
+    ean: Optional[str]
     nome: Optional[str]
     marca: Optional[str]
     departamento_id: Optional[int] = None
@@ -29,7 +31,8 @@ class ProdutoSchemaAlter(BaseModel):
         orm_mode = True
 
 class ProdutoSchemaCompleto(BaseModel):
-    id: int
+    id: Optional[int] = None
+    ean: str
     nome: str
     marca: Optional[str]
     urlImagem: Optional[str]

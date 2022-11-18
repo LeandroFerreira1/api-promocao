@@ -7,7 +7,8 @@ from api_promo.core.configs import settings
 class ProdutoModel(settings.DBBaseModel):
     __tablename__ = 'produto'
 
-    id = Column(BigInteger, primary_key=True)
+    id = Column(BigInteger, primary_key=True, autoincrement=True)
+    ean = Column(String(256), nullable=False)
     nome = Column(String(256), nullable=False)
     marca = Column(String(256), nullable=True)
     urlImagem = Column(String(256), nullable=True)

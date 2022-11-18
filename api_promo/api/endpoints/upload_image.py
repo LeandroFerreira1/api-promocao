@@ -44,7 +44,7 @@ async def post_img(id: int,file: UploadFile = File(...), db: AsyncSession = Depe
 
 # POST Imagem produto 
 @router.post('/{ean}', status_code=status.HTTP_201_CREATED) 
-async def post_img(ean: int,file: UploadFile = File(...), db: AsyncSession = Depends(get_session)):
+async def post_img(ean: str,file: UploadFile = File(...), db: AsyncSession = Depends(get_session)):
     async with db as session:
         query = select(ProdutoModel).filter(ProdutoModel.id == ean)
         result = await session.execute(query)
@@ -61,7 +61,7 @@ async def post_img(ean: int,file: UploadFile = File(...), db: AsyncSession = Dep
 
 # GET imagem Produto
 @router.get('/{ean}', status_code=status.HTTP_200_OK)
-async def get_image_ean(ean: int):
+async def get_image_ean(ean: str):
     filename = f'{ean}.jpg'
     file_path = os.path.join(IMAGE_FOLDER_PRODUTO, filename)
     if os.path.exists(file_path):

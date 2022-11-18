@@ -14,10 +14,10 @@ base_url = 'https://cosmos.bluesoft.com.br/products/'
 image_url = 'https://cdn-cosmos.bluesoft.com.br/products/'
 
 
-def buscar_produto(ean: int) -> ProdutoModel:
+def buscar_produto(ean: str) -> ProdutoModel:
 
-    url = base_url + str(ean)
-    url_image = image_url + str(ean)
+    url = base_url + ean
+    url_image = image_url + ean
 
     resposta = requests.get(url, headers=cabecalho)
     sopa = resposta.text
@@ -43,7 +43,7 @@ def buscar_produto(ean: int) -> ProdutoModel:
     
     produto = ProdutoModel
 
-    produto.id = int(ean_produto)
+    produto.ean = ean_produto
     produto.nome = description_produto
     produto.marca = marca_produto
     produto.tipo = ""
