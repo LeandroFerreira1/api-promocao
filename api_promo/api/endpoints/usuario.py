@@ -68,7 +68,7 @@ async def get_usuario(usuario_id: int, db: AsyncSession = Depends(get_session)):
     async with db as session:
         query = select(UsuarioModel).filter(UsuarioModel.id == usuario_id)
         result = await session.execute(query)
-        usuario: UsuarioSchemaPromocoes = result.scalars().unique().one_or_none()
+        usuario: UsuarioSchemaPromocoes = result.scalars().first
 
         if usuario:
             return usuario
@@ -83,7 +83,7 @@ async def put_usuario(usuario: UsuarioSchemaUp, usuario_logado: UsuarioModel = D
     async with db as session:
         query = select(UsuarioModel).filter(UsuarioModel.id == usuario_logado.id)
         result = await session.execute(query)
-        usuario_up: UsuarioSchemaBase = result.scalars().unique().one_or_none()
+        usuario_up: UsuarioSchemaBase = result.scalars().first
 
         if usuario_up:
             if usuario.nome:
