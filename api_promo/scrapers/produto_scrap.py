@@ -1,7 +1,12 @@
 import requests
+import os
 from bs4 import BeautifulSoup
 
 from api_promo.models.produto_model import ProdutoModel
+
+dirname = os.path.dirname(__file__)
+
+IMAGE_FOLDER_PRODUTO = os.path.join(dirname, '../data/images/')
 
 
 cabecalho = {'user-agent' : 'Mozzila/5.0'}
@@ -29,14 +34,11 @@ def buscar_produto(ean: int) -> ProdutoModel:
 
     marca = sopa_bonita.find_all('span', {'class':'brand-name'})
     marca_produto = marca[0].contents[1].text
-
-    caminho = './data/images/'
-    imagename = caminho + ean_produto + '.jpg'
-
+    filename = f'{IMAGE_FOLDER_PRODUTO}{ean_produto}.jpg'
     caminhoApi = '/api/v1/upload-images/'
     caminhoAbsoluto = caminhoApi + ean_produto
 
-    with open(imagename, 'wb') as f:
+    with open(f'{filename}', 'wb') as f:
         f.write(requests.get(url_image, headers=cabecalho).content)
     
     produto = ProdutoModel

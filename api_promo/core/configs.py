@@ -1,16 +1,28 @@
 from typing import List
+import os
+from starlette.config import Config
+from starlette.datastructures import Secret
 
 from pydantic import BaseSettings
 from sqlalchemy.ext.declarative import declarative_base
 
 class Settings(BaseSettings):
+
+    config = Config(".env")
+
+    PG_HOST = os.environ['PG_HOST']
+    PG_USER = os.environ['PG_HOST']
+    PG_PASS = os.environ['PG_HOST']
+    PG_DB = os.environ['PG_HOST']
+    
+
     API_V1_STR: str = '/api/v1'
-    #DB_URL: str = 'postgresql+asyncpg://postgres:1702@localhost:5432/promocao'
-    #DB_URL: str = 'postgresql+asyncpg://admin:admin@localhost:5432/promo'
-    DB_URL: str = 'postgresql+asyncpg://postgres:589916@191.253.23.111:3152/promocao'
+
+    DB_URL: str = 'postgresql+asyncpg://postgres:8d339b9fbc605153@srv-captain--postgresql-promo:5432/promocao'
     DBBaseModel = declarative_base()
 
     JWT_SECRET: str = '81ZONkehu3qVaSKG0iAXrNAW97eMu62VobhRyEIeV3M'
+
     """
     import secrets
 

@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, long
 from fastapi import APIRouter, status, Depends, HTTPException, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
@@ -43,7 +43,7 @@ async def get_produtos(db: AsyncSession = Depends(get_session)):
 
 # GET produto
 @router.get('/{produto_id}', response_model=ProdutoSchema, status_code=status.HTTP_200_OK)
-async def get_produto(produto_id: int, db: AsyncSession = Depends(get_session)):
+async def get_produto(produto_id: long, db: AsyncSession = Depends(get_session)):
     async with db as session:
         query = select(ProdutoModel).filter(ProdutoModel.id == produto_id)
         result = await session.execute(query)

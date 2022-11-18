@@ -15,9 +15,9 @@ from api_promo.core.deps import get_session
 
 dirname = os.path.dirname(__file__)
 
-IMAGE_FOLDER_PRODUTO = os.path.join(dirname, '/../../data/images/')
-IMAGE_FOLDER_ESTABELECIMENTO = os.path.join(dirname, '/../../data/estabelecimentos/')
-IMAGE_FOLDER_USER = os.path.join(dirname, '/../../data/users/')
+IMAGE_FOLDER_PRODUTO = os.path.join(dirname, '../../data/images/')
+IMAGE_FOLDER_ESTABELECIMENTO = os.path.join(dirname, '../../data/estabelecimentos/')
+IMAGE_FOLDER_USER = os.path.join(dirname, '../../data/users/')
 IMAGE_FOLDER_TAGS = os.path.join(dirname, '../../data/tags/')
  
  
