@@ -15,4 +15,6 @@ RUN poetry install --no-interaction --no-ansi
 
 EXPOSE 8000
 
+RUN python api_promo/criar_tabelas.py
+
 CMD ["uvicorn", "api_promo.main:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -8,14 +8,6 @@ from sqlalchemy.ext.declarative import declarative_base
 
 class Settings(BaseSettings):
 
-    config = Config(".env")
-
-    PG_HOST = os.environ['PG_HOST']
-    PG_USER = os.environ['PG_HOST']
-    PG_PASS = os.environ['PG_HOST']
-    PG_DB = os.environ['PG_HOST']
-    
-
     API_V1_STR: str = '/api/v1'
 
     DB_URL: str = 'postgresql+asyncpg://postgres:8d339b9fbc605153@srv-captain--postgresql-promo:5432/promocao'
