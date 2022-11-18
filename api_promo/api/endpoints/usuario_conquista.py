@@ -17,8 +17,12 @@ router = APIRouter()
 # POST usuario_conquista
 @router.post('/', status_code=status.HTTP_201_CREATED, response_model=UsuarioConquistaSchemaBase)
 async def post_usuario_conquista(usuario_conquista: UsuarioConquistaSchemaBase, usuario_logado: UsuarioModel = Depends(get_current_user), db: AsyncSession = Depends(get_session)):
+<<<<<<< Updated upstream
     nova_usuario_conquista: UsuarioConquistaModel = UsuarioConquistaModel(
         usuario_id=usuario_logado.id, conquista_id=usuario_conquista.conquista_id)
+=======
+    nova_usuario_conquista: UsuarioConquistaModel = UsuarioConquistaModel(usuario_id=usuario_logado.id, conquista_id=usuario_conquista.conquista_id)
+>>>>>>> Stashed changes
 
     db.add(nova_usuario_conquista)
     await db.commit()
