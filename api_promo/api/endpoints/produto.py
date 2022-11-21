@@ -25,8 +25,12 @@ async def post_produto(produto: ProdutoSchema, db: AsyncSession = Depends(get_se
 @router.post('/ean/{ean}', status_code=status.HTTP_201_CREATED)
 async def post_produto_ean(ean: str, db: AsyncSession = Depends(get_session)):
     produtoEan = buscar_produto(ean)
+
+    if produtoEan is None:
+        return Response(status_code=500)
+
     novo_produto: ProdutoModel = ProdutoModel(
-        ean=produtoEan.ean,nome=produtoEan.nome, marca=produtoEan.marca, urlImagem=produtoEan.urlImagem)
+        ean=ean,nome=produtoEan.nome, marca=produtoEan.marca, urlImagem=produtoEan.urlImagem)
     db.add(novo_produto)
     await db.commit()
     return novo_produto
@@ -42,10 +46,10 @@ async def get_produtos(db: AsyncSession = Depends(get_session)):
         return produtos
 
 # GET produto
-@router.get('/{produto_id}', response_model=ProdutoSchema, status_code=status.HTTP_200_OK)
-async def get_produto(produto_id: str, db: AsyncSession = Depends(get_session)):
+@router.get('/{ean}', response_model=ProdutoSchema, status_code=status.HTTP_200_OK)
+async def get_produto(ean: str, db: AsyncSession = Depends(get_session)):
     async with db as session:
-        query = select(ProdutoModel).filter(ProdutoModel.ean == produto_id)
+        query = select(ProdutoModel).filter(ProdutoModel.ean == ean)
         result = await session.execute(query)
         produto: ProdutoModel = result.scalars().first()
 
@@ -56,10 +60,10 @@ async def get_produto(produto_id: str, db: AsyncSession = Depends(get_session)):
                                 status_code=status.HTTP_404_NOT_FOUND)
 
 # PUT produto
-@router.patch('/{produto_id}', response_model=ProdutoSchema, status_code=status.HTTP_202_ACCEPTED)
-async def put_produto(produto_id: str, produto: ProdutoSchemaAlter, db: AsyncSession = Depends(get_session)):
+@router.patch('/{ean}', response_model=ProdutoSchema, status_code=status.HTTP_202_ACCEPTED)
+async def put_produto(ean: str, produto: ProdutoSchemaAlter, db: AsyncSession = Depends(get_session)):
     async with db as session:
-        query = select(ProdutoModel).filter(ProdutoModel.ean == produto_id)
+        query = select(ProdutoModel).filter(ProdutoModel.ean == ean)
         result = await session.execute(query)
         produto_up: ProdutoModel = result.scalars().first()
 
@@ -76,9 +80,9 @@ async def put_produto(produto_id: str, produto: ProdutoSchemaAlter, db: AsyncSes
 
 # DELETE produto
 @router.delete('/{produto_id}', status_code=status.HTTP_204_NO_CONTENT)
-async def delete_produto(produto_id: str, db: AsyncSession = Depends(get_session)):
+async def delete_produto(produto_id: int, db: AsyncSession = Depends(get_session)):
     async with db as session:
-        query = select(ProdutoModel).filter(ProdutoModel.ean == produto_id)
+        query = select(ProdutoModel).filter(ProdutoModel.id == produto_id)
         result = await session.execute(query)
         produto_del: ProdutoModel = result.scalars().first()
 

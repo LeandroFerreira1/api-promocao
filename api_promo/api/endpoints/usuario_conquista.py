@@ -17,13 +17,24 @@ router = APIRouter()
 # POST usuario_conquista
 @router.post('/', status_code=status.HTTP_201_CREATED, response_model=UsuarioConquistaSchemaBase)
 async def post_usuario_conquista(usuario_conquista: UsuarioConquistaSchemaBase, usuario_logado: UsuarioModel = Depends(get_current_user), db: AsyncSession = Depends(get_session)):
-    nova_usuario_conquista: UsuarioConquistaModel = UsuarioConquistaModel(
-        usuario_id=usuario_logado.id, conquista_id=usuario_conquista.conquista_id)
+    async with db as session:
+        query = select(UsuarioConquistaModel).filter(UsuarioConquistaModel.usuario_id == usuario_logado.id)
 
-    db.add(nova_usuario_conquista)
-    await db.commit()
+        result = await session.execute(query)
+        conquistas_usuario: List[UsuarioConquistaModel] = result.scalars().unique().all()
 
-    return nova_usuario_conquista
+        if len(conquistas_usuario) > 0:
+            for conquista in conquistas_usuario:
+                if conquista.conquista_id == usuario_conquista.conquista_id:
+                    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Conquista já adquirida")
+
+        novo_usuario_conquista: UsuarioConquistaModel = UsuarioConquistaModel(
+            usuario_id=usuario_logado.id, conquista_id=usuario_conquista.conquista_id)
+
+        db.add(novo_usuario_conquista)
+        await db.commit()
+
+        return novo_usuario_conquista
 
 # GET usuario_conquista
 @router.get('/', response_model=List[UsuarioConquistaSchema])
