@@ -46,7 +46,7 @@ async def get_usuarios(db: AsyncSession = Depends(get_session)):
     async with db as session:
         query = select(UsuarioModel)
         result = await session.execute(query)
-        usuarios: List[UsuarioSchemaBase] = result.scalars().unique().all()
+        usuarios: List[UsuarioModel] = result.scalars().unique().all()
 
         return usuarios
 
@@ -57,18 +57,18 @@ async def get_usuarios(db: AsyncSession = Depends(get_session)):
     async with db as session:
         query = select(UsuarioModel).order_by(desc(UsuarioModel.pontuacao))
         result = await session.execute(query)
-        usuarios: List[UsuarioSchemaBase] = result.scalars().unique().all()
+        usuarios: List[UsuarioModel] = result.scalars().unique().all()
 
         return usuarios
 
 
 # GET Usuario
-@router.get('/{usuario_id}', response_model=UsuarioSchemaPromocoes, status_code=status.HTTP_200_OK)
+@router.get('/{usuario_id}', response_model=UsuarioSchemaBase, status_code=status.HTTP_200_OK)
 async def get_usuario(usuario_id: int, db: AsyncSession = Depends(get_session)):
     async with db as session:
         query = select(UsuarioModel).filter(UsuarioModel.id == usuario_id)
         result = await session.execute(query)
-        usuario: UsuarioSchemaPromocoes = result.scalars().first
+        usuario: UsuarioModel = result.scalars().first()
 
         if usuario:
             return usuario
@@ -83,7 +83,7 @@ async def put_usuario(usuario: UsuarioSchemaUp, usuario_logado: UsuarioModel = D
     async with db as session:
         query = select(UsuarioModel).filter(UsuarioModel.id == usuario_logado.id)
         result = await session.execute(query)
-        usuario_up: UsuarioSchemaBase = result.scalars().first
+        usuario_up: UsuarioModel = result.scalars().first()
 
         if usuario_up:
             if usuario.nome:
@@ -109,7 +109,7 @@ async def put_usuario(ponto: int, usuario_logado: UsuarioModel = Depends(get_cur
     async with db as session:
         query = select(UsuarioModel).filter(UsuarioModel.id == usuario_logado.id)
         result = await session.execute(query)
-        usuario_up: UsuarioSchemaBase = result.scalars().unique().one_or_none()
+        usuario_up: UsuarioModel = result.scalars().first()
 
         usuario_up.pontuacao = usuario_up.pontuacao + ponto
 
@@ -123,7 +123,7 @@ async def delete_usuario(usuario_id: int, db: AsyncSession = Depends(get_session
     async with db as session:
         query = select(UsuarioModel).filter(UsuarioModel.id == usuario_id)
         result = await session.execute(query)
-        usuario_del: UsuarioSchemaPromocoes = result.scalars().unique().one_or_none()
+        usuario_del: UsuarioModel = result.scalars().first
 
         if usuario_del:
             await session.delete(usuario_del)

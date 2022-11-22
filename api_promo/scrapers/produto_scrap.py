@@ -39,7 +39,7 @@ def buscar_produto(ean: str) -> ProdutoModel:
         filename = f'{IMAGE_FOLDER_PRODUTO}{ean_produto}.jpg'
         caminhoApi = '/api/v1/upload-images/'
         caminhoAbsoluto = caminhoApi + ean_produto
-
+        
         with open(f'{filename}', 'wb') as f:
             f.write(requests.get(url_image, headers=cabecalho).content)
         
